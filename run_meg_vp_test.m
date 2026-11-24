@@ -56,7 +56,7 @@ vCE_multi = zscore(rdm.ContrastEnergy_MultiBand(utMask)); % Supplementary multi-
 vCont     = zscore(rdm.Contour(utMask));
 vLum      = zscore(rdm.MeanLuminance(utMask));
 
-karamiNames = {'Number', 'FieldArea', 'SurfaceArea', 'ItemArea', 'Density'};
+karamiNames = {'Number', 'Total Field Area', 'Total Surface Area', 'Average Item Area', 'Density'};
 X_karami    = [vNum, vTFA, vTSA, vAIA, vDen];
 X_nonNum    = [vAIA, vTFA, vTSA, vDen];
 
