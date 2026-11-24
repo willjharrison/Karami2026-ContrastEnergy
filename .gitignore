@@ -1,0 +1,23 @@
+# macOS & OS artifacts
+.DS_Store
+._*
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# MATLAB temporary files
+*.asv
+*.m~
+
+# Large third-party MEG data & generated outputs
+MEG_Data/
+meg_rdms/
+results/
+*.7z
+*.part
+*.fif
+*.mat
