@@ -51,4 +51,3 @@ To reproduce the full MEG analyses, download the datasets and reference files di
 ## Contact
 
 William J. Harrison (`wharrison@usc.edu.au`, ORCID: 0000-0002-6408-0359), Visual Cognition Lab, School of Health, University of the Sunshine Coast.  
-Reuben Rideaux, University of Sydney.
