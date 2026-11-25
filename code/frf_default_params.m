@@ -24,9 +24,10 @@ params.stim.ppd             = params.stim.imSize_px / params.stim.imSize_deg; % 
 % Dot rendering
 params.stim.bgLum           = 0.5;   % mid-gray background
 params.stim.dotLum          = 0.0;   % black dots
+params.stim.dotAreaJitter   = 0.50;  % +/-50% within-array dot-area jitter (mean exact = itemArea_vd2)
 params.stim.minEdgeSep_deg  = 0.10;  % minimum edge-to-edge gap between dots (deg)
 params.stim.includeFixCross = false; % red cross is constant across conditions
-params.stim.nExemplars      = 20;    % random dot arrays averaged per condition
+params.stim.nExemplars      = 100;   % random dot arrays averaged per condition
 params.stim.rngSeed         = 42;    % reproducible synthetic stimuli
 
 %% Uncontroversial Human Photopic CSF (createCSF.m: truncated log-parabola)
@@ -40,7 +41,7 @@ params.csf.nDisplaysPerNum  = 200;   % displays per numerosity in derive_optimal
 
 %% Spatial-Frequency Filter Bank (5 bands, Band 3 aligned to optimal SF)
 params.sf.useOptimalSF      = true;  % align Band 3 to ideal-observer optimalSF_cpd
-params.sf.nFreqs            = 7;     % 5 isotropic bands
+params.sf.nFreqs            = 5;     % 5 isotropic bands
 params.sf.stepOctaves       = 1.0;   % 1-octave spacing around Band 3
 params.sf.lowPassFreq_cpd   = 0.5;   % fallback if useOptimalSF == false
 params.sf.highPassFreq_cpd  = 8.0;   % fallback if useOptimalSF == false
