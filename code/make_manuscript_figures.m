@@ -137,7 +137,7 @@ k5Lines = {'-', '-', '-', '-', '--'};
 % --- Panel 1a: Karami et al. 5-predictor replication ---
 f1a = figure('Color', 'w', 'Position', [60 400 580 440]);
 hold on;
-shade_window([80 140],  [-0.10 0.34], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.10 0.34], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.10 0.34], [1.0 0.95 0.92]);
 h1a = gobjects(1, 5);
 for j = 1:5
@@ -241,7 +241,7 @@ save_fig_png(f1d, fullfile(mainDir, 'fig1d_ce_rdm.png'), 300);
 % --- Panel 2a: Semipartial r — Number vs Contrast Energy (clean legend) ---
 f2a = figure('Color', 'w', 'Position', [600 40 580 440]);
 hold on;
-shade_window([80 140],  [-0.06 0.22], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.06 0.22], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.06 0.22], [1.0 0.95 0.92]);
 h2a = gobjects(1, 2);
 h2a(1) = plot_mean_sem(tPlot, sr_k5(:, tMask, 1),     colNum, '-', 2.2, 'Number');
@@ -258,7 +258,7 @@ save_fig_png(f2a, fullfile(mainDir, 'fig2a_semipartial_ce_vs_number.png'), 300);
 % --- Panel 2b: Non-Negative Variance Partitioning (clean legend) ---
 f2b = figure('Color', 'w', 'Position', [1200 40 580 440]);
 hold on;
-shade_window([80 140],  [-0.002 0.045], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.002 0.045], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.002 0.045], [1.0 0.95 0.92]);
 muShrd = mean(vp_shared(:, tMask), 1);
 hSh = area(tPlot, max(0, muShrd), 'FaceColor', [0.75 0.75 0.75], 'FaceAlpha', 0.50, ...
@@ -279,7 +279,7 @@ save_fig_png(f2b, fullfile(mainDir, 'fig2b_variance_partitioning.png'), 300);
 % Number and Contrast Energy (2.56 cpd) at full contrast with SEM shading.
 f2c = figure('Color', 'w', 'Position', [300 200 580 440]);
 hold on;
-shade_window([80 140],  [-0.10 0.34], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.10 0.34], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.10 0.34], [1.0 0.95 0.92]);
 
 % Plot 4 non-numeric covariates first (faded, no error bars)

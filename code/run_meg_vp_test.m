@@ -196,7 +196,7 @@ for s = 1:nSubj
 end
 
 %% 4. Print & save summaries
-earlyMask = times_ms >= 80  & times_ms <= 140;
+earlyMask = times_ms >= 115 & times_ms <= 140;
 lateMask  = times_ms >= 220 & times_ms <= 355;
 
 fprintf('\n=== Primary Analysis: Single Ideal-Observer SF (%.2f cpd) vs. Number (N = %d) ===\n', optBandSF_cpd, nSubj);
@@ -228,7 +228,7 @@ eNum = mean(mean(dR2_Num(:, earlyMask)));    lNum = mean(mean(dR2_Num(:, lateMas
 eCE  = mean(mean(dR2_CE(:, earlyMask)));     lCE  = mean(mean(dR2_CE(:, lateMask)));
 ePct = 100 * eSh / max(eNum, eps);           lPct = 100 * lSh / max(lNum, eps);
 
-fprintf('Early (80-140 ms):  dR^2(CE - Num) = %+.4f%s | Shared=%.4f (%.1f%% of Num), UniqNum=%.4f, UniqCE=%.4f | CE/Num=%.1f%%\n', ...
+fprintf('Early (115-140 ms):  dR^2(CE - Num) = %+.4f%s | Shared=%.4f (%.1f%% of Num), UniqNum=%.4f, UniqCE=%.4f | CE/Num=%.1f%%\n', ...
     mean(eDiff_s), statE, eSh, ePct, eUN, eUC, 100 * eCE / max(eNum, eps));
 fprintf('  Signed unique r:  Num|CE = %+.4f (t(%d)=%+.2f, p=%.4f) | CE|Num = %+.4f (t(%d)=%+.2f, p=%.4f)\n', ...
     mean(eUnNum_s), stUNE.df, stUNE.tstat, pUN_E, mean(eUnCE_s), stUCE.df, stUCE.tstat, pUC_E);
@@ -239,7 +239,7 @@ fprintf('  Signed unique r:  Num|CE = %+.4f (t(%d)=%+.2f, p=%.4f) | CE|Num = %+.
 fprintf('MeanLuminance ctrl: Early dR^2(Lum - Num) = %+.4f | Late dR^2(Lum - Num) = %+.4f\n\n', ...
     mean(mean(r2diff_Lum(:, earlyMask))), mean(mean(r2diff_Lum(:, lateMask))));
 
-vpTbl = table({'Early_80_140ms'; 'Late_220_355ms'}, ...
+vpTbl = table({'Early_115_140ms'; 'Late_220_355ms'}, ...
     [mean(eDiff_s); mean(lDiff_s)], [pE; pL], ...
     [eSh; lSh], [ePct; lPct], [eUN; lUN], [eUC; lUC], [eNum; lNum], [eCE; lCE], ...
     [mean(eUnNum_s); mean(lUnNum_s)], [pUN_E; pUN_L], [mean(eUnCE_s); mean(lUnCE_s)], [pUC_E; pUC_L], ...
@@ -252,16 +252,16 @@ sfRows = cell(nBands + 2, 3);
 for b = 1:nBands
     eB = mean(mean(dR2_bands(:, earlyMask, b)));
     lB = mean(mean(dR2_bands(:, lateMask,  b)));
-    fprintf('  Band %d (%6.2f cpd) | Early (80-140 ms): %.4f | Late (220-355 ms): %.4f\n', ...
+    fprintf('  Band %d (%6.2f cpd) | Early (115-140 ms): %.4f | Late (220-355 ms): %.4f\n', ...
         b, sfFreqs_cpd(b), eB, lB);
     sfRows(b, :) = {sprintf('%.2f cpd', sfFreqs_cpd(b)), eB, lB};
 end
 eAll = mean(mean(dR2_CE_multi(:, earlyMask))); lAll = mean(mean(dR2_CE_multi(:, lateMask)));
-fprintf('  %-18s | Early (80-140 ms): %.4f | Late (220-355 ms): %.4f\n', 'Full CE Bank', eAll, lAll);
-fprintf('  %-18s | Early (80-140 ms): %.4f | Late (220-355 ms): %.4f\n', 'Number (ref)', eNum, lNum);
+fprintf('  %-18s | Early (115-140 ms): %.4f | Late (220-355 ms): %.4f\n', 'Full CE Bank', eAll, lAll);
+fprintf('  %-18s | Early (115-140 ms): %.4f | Late (220-355 ms): %.4f\n', 'Number (ref)', eNum, lNum);
 sfRows(nBands + 1, :) = {'Full_CE_Bank', eAll, lAll};
 sfRows(nBands + 2, :) = {'Number_Ref',   eNum, lNum};
-writetable(cell2table(sfRows, 'VariableNames', {'Band', 'Early_80_140ms_dR2', 'Late_220_355ms_dR2'}), ...
+writetable(cell2table(sfRows, 'VariableNames', {'Band', 'Early_115_140ms_dR2', 'Late_220_355ms_dR2'}), ...
     fullfile(resDir, 'sf_band_summary.csv'));
 
 %% 5. MAIN PANELS (Single Ideal-Observer SF — displayed on screen, 300 DPI)
@@ -272,7 +272,7 @@ panPos = [100 120 640 460];
 % Main Panel 1: Semipartial r — Number vs Contrast Energy (single ideal-observer SF)
 fM1 = figure('Name', 'Main 1: Semipartial r (Number vs CE)', 'Color', 'w', 'Position', panPos);
 hold on;
-shade_window([80 140],  [-0.06 0.22], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.06 0.22], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.06 0.22], [1.0 0.95 0.92]);
 hM1 = gobjects(1, 2);
 hM1(1) = plot_mean_sem(tPlot, sr_karami(:, tMask, 1), [0 0 0],          '-', 2.2, 'Number | 4 non-num');
@@ -287,7 +287,7 @@ save_fig_png(fM1, fullfile(mainDir, 'main_1_semipartial_ce_vs_number.png'), 300)
 % Main Panel 2: Non-Negative Variance Partitioning (Shared vs Unique)
 fM2 = figure('Name', 'Main 2: Variance Partitioning', 'Color', 'w', 'Position', panPos + [50 -40 0 0]);
 hold on;
-shade_window([80 140],  [-0.002 0.045], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.002 0.045], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.002 0.045], [1.0 0.95 0.92]);
 muShrd = mean(vp_shared(:, tMask), 1);
 hSh = area(tPlot, max(0, muShrd), 'FaceColor', [0.75 0.75 0.75], 'FaceAlpha', 0.50, ...
@@ -304,7 +304,7 @@ save_fig_png(fM2, fullfile(mainDir, 'main_2_variance_partitioning.png'), 300);
 % Main Panel 3: Matched 5-Predictor Comparison (Positive-fit dR^2_Model - dR^2_Number)
 fM3 = figure('Name', 'Main 3: Matched 5-Predictor Comparison', 'Color', 'w', 'Position', panPos + [100 -80 0 0]);
 hold on;
-shade_window([80 140],  [-0.035 0.025], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.035 0.025], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.035 0.025], [1.0 0.95 0.92]);
 hM3 = gobjects(1, 3);
 hM3(1) = plot_mean_sem(tPlot, r2diff_CE(:, tMask),   [0.00 0.45 0.74], '-',  2.2, sprintf('Contrast Energy (%.2f cpd) - Number', optBandSF_cpd));
@@ -321,7 +321,7 @@ save_fig_png(fM3, fullfile(mainDir, 'main_3_matched_5pred_diff.png'), 300);
 % Supp 1: Karami 5-predictor replication
 fS1 = figure('Visible', 'off', 'Color', 'w', 'Position', panPos);
 hold on;
-shade_window([80 140],  [-0.12 0.35], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.12 0.35], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.12 0.35], [1.0 0.95 0.92]);
 kColors = [0 0 0; 0.85 0.33 0.10; 0.00 0.45 0.74; 0.47 0.67 0.19; 0.49 0.18 0.56];
 kLines  = {'-', '-', '-', '-', '--'};
@@ -340,7 +340,7 @@ close(fS1);
 % Supp 2: Zero-order fits
 fS2 = figure('Visible', 'off', 'Color', 'w', 'Position', panPos);
 hold on;
-shade_window([80 140],  [-0.18 0.45], [0.92 0.95 1.0]);
+shade_window([115 140],  [-0.18 0.45], [0.92 0.95 1.0]);
 shade_window([220 355], [-0.18 0.45], [1.0 0.95 0.92]);
 hS2 = gobjects(1, 4);
 hS2(1) = plot_mean_sem(tPlot, r0_Num(:, tMask),  [0 0 0],          '-',  2.2, 'Number');
@@ -359,7 +359,7 @@ close(fS2);
 sfCols = parula(nBands + 1);
 fS3 = figure('Visible', 'off', 'Color', 'w', 'Position', [100 120 820 440]);
 hold on;
-shade_window([80 140],  [0 0.05], [0.92 0.95 1.0]);
+shade_window([115 140],  [0 0.05], [0.92 0.95 1.0]);
 shade_window([220 355], [0 0.05], [1.0 0.95 0.92]);
 hS3 = gobjects(1, nBands + 1);
 for b = 1:nBands
@@ -393,7 +393,7 @@ fS5 = figure('Visible', 'off', 'Color', 'w', 'Position', panPos);
 hold on;
 eBand_mu = squeeze(mean(mean(dR2_bands(:, earlyMask, :), 2), 1));
 lBand_mu = squeeze(mean(mean(dR2_bands(:, lateMask,  :), 2), 1));
-plot(sfFreqs_cpd, eBand_mu, '-o', 'Color', [0.00 0.45 0.74], 'LineWidth', 2.2, 'MarkerFaceColor', [0.00 0.45 0.74], 'DisplayName', 'Early (80-140 ms)');
+plot(sfFreqs_cpd, eBand_mu, '-o', 'Color', [0.00 0.45 0.74], 'LineWidth', 2.2, 'MarkerFaceColor', [0.00 0.45 0.74], 'DisplayName', 'Early (115-140 ms)');
 plot(sfFreqs_cpd, lBand_mu, '-s', 'Color', [0.85 0.33 0.10], 'LineWidth', 2.2, 'MarkerFaceColor', [0.85 0.33 0.10], 'DisplayName', 'Late (220-355 ms)');
 yline(eNum, '--', 'Color', [0.00 0.45 0.74], 'LineWidth', 1.2, 'DisplayName', 'Number (Early ref)');
 yline(lNum, '--', 'Color', [0.85 0.33 0.10], 'LineWidth', 1.2, 'DisplayName', 'Number (Late ref)');
